@@ -16,3 +16,11 @@
 !/log/.keep
 /tmp
 versions/
+
+/solr/pids
+/solr/data
+/solr/default
+/solr/development
+/solr/test
+/solr/production
+

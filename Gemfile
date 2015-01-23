@@ -51,5 +51,30 @@ gem "progress_bar"
 gem "sunspot_rails"
 gem "sunspot_solr"
 #	rails generate sunspot_rails:install
+#	created config/sunspot.yml
 
 #	https://github.com/sunspot/sunspot/issues/606
+
+group :test do
+	gem 'rails-dom-testing'
+	gem 'test-unit'
+	#gem "simplecov", :require => false
+
+	#	for dealing with integration tests
+	#gem 'database_cleaner'
+
+	gem "mocha", :require => 'mocha/setup'
+
+	gem "autotest-rails", :require => 'autotest/rails'
+
+	#gem 'ZenTest'
+
+	#gem "factory_girl_rails"
+
+	gem 'jakewendt-html_test'
+
+	#gem 'capybara'
+	#gem 'capybara-webkit'
+
+	gem 'jakewendt-test_with_verbosity'
+end

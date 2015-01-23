@@ -4,13 +4,20 @@ class Widget < ActiveRecord::Base
 	searchable do
 
 		string :property_keys, :multiple => true do
-				properties.collect(&:key)
+			properties.collect(&:key)
 		end
 
-		dynamic_string :properties do
-				properties.inject({}) do |hash, pair|
-						hash.merge(pair.key.to_sym => pair.value)
+		#	:multiple => true works, so need to use arrays
+		dynamic_string :properties, :multiple => true do
+			#	loop over properties and build a hash.
+			properties.inject({}) do |hash, property|
+				if( hash.has_key?( property.key.to_sym ) )
+					hash[property.key.to_sym].push( property.value )
+				else
+					hash.merge!(property.key.to_sym => [property.value])
 				end
+				hash
+			end
 		end
 
 		#	Can I also do ...
@@ -18,6 +25,9 @@ class Widget < ActiveRecord::Base
 		#		...
 		#	end
 		#	... for select properties that would be better indexed as integers?
+		#
+		#	No.  Looks like I would need a different name for each block.
+		#	
 
 	end
 end
