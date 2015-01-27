@@ -38,3 +38,5 @@ How to identify dynamic fields to facet on
 https://github.com/sunspot/sunspot/issues/606
 
 
+Could have a taken_at attribute on the properties, but can't index them.
+
