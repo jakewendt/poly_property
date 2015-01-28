@@ -46,6 +46,7 @@ end
 
 
 
+gem "will_paginate"
 
 gem "progress_bar"
 gem "sunspot_rails"

@@ -1,0 +1,56 @@
+<div id='refine'>
+	<%= form_tag( widgets_path, :method => :get ) do %>
+		<%= submit_tag "Search Widgets", :name => nil %><br/>
+	
+		<%#	preserve the order and direction on next search %>
+		<%# could also save in session as do elsewhere? %>
+		<%= hidden_field_tag :order, params[:order] %>
+		<%= hidden_field_tag :dir, params[:dir] %>
+	
+<div class='facets'>
+	<% @search.facets.each do |facet| -%>
+		<% next if facet.rows.empty? -%><%# don't show empty facets -%>
+		<%#= facet_for(facet,
+			:multiselector => @sunspot_search_class.sunspot_columns.detect{|c|
+					c.name == facet.name.to_s }.try(:multiple),
+			:facet_counts  => true ) %>
+		<%# 
+			multiselector is for when a single subject could have many
+			Either as an array in itself or perhaps some implementation
+			of a has_many for enrollments or something
+		%>
+	<% end -%><%# @search.facets.each do |facet| -%>
+</div><!-- class='facets' -->
+
+
+<div class='field_wrapper'>
+	<%= label_tag( :per_page, 'per page (html only) ' )%>
+	<%= select_tag( :per_page, options_for_select([25,50,100], params[:per_page]||50) )%>
+</div><!-- class='field_wrapper' -->
+
+
+	<% end %><%# form_tag -%>
+</div>
+
+<div id='results'>
+	<% unless @search.results.empty? %>
+		<table><thead><tr>
+			<th>&nbsp;</th>
+			<th>Name</th>
+			<th>Description</th>
+		</tr></thead><tbody>
+			<% @search.results.each do |result| %>
+				<tr class='row'>
+					<td><%= result.id %></td>
+					<td><%= result.name %></td>
+					<td><%= result.description %></td>
+				</tr>
+			<% end %>
+		</tbody></table>
+		<br/><%= will_paginate(@search.hits) %>
+		<p class='page_info'>Displaying page <%=@search.hits.current_page%> of 
+			<%=@search.hits.total_pages%> out of <%=@search.total%> results</p>
+	<% else %>
+		<p>No results</p>
+	<% end %>
+</div>

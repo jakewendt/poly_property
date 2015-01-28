@@ -37,3 +37,9 @@ Please feel free to use a different markup language if you do not plan to run
 This "app" is really just me meddling with the idea of creating
 a sunspot index made almost entirely of dynamic fields.
 
+ sudo apachectl start
+
+ sudo /opt/local/share/mariadb/support-files/mysql.server start
+
+ bundle exec rake sunspot:solr:start
+
