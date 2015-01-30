@@ -1,4 +1,6 @@
-<div id='refine'>
+<%= content_tag(:div, class: 'table') do %>
+<%= content_tag(:div, class: 'table_row') do %>
+<%= content_tag(:div, id: 'refine') do %>
 	<%= form_tag( widgets_path, :method => :get ) do %>
 		<%= submit_tag "Search Widgets", :name => nil %><br/>
 	
@@ -7,32 +9,59 @@
 		<%= hidden_field_tag :order, params[:order] %>
 		<%= hidden_field_tag :dir, params[:dir] %>
 	
-<div class='facets'>
-	<% @search.facets.each do |facet| -%>
-		<% next if facet.rows.empty? -%><%# don't show empty facets -%>
-		<%#= facet_for(facet,
-			:multiselector => @sunspot_search_class.sunspot_columns.detect{|c|
-					c.name == facet.name.to_s }.try(:multiple),
-			:facet_counts  => true ) %>
-		<%# 
-			multiselector is for when a single subject could have many
-			Either as an array in itself or perhaps some implementation
-			of a has_many for enrollments or something
-		%>
-	<% end -%><%# @search.facets.each do |facet| -%>
-</div><!-- class='facets' -->
+		<%= content_tag(:div, class: 'facets') do %>
+		<% @search.facets.each do |facet| -%>
+			<% next if facet.rows.empty? -%><%# don't show empty facets -%>
+	
+			<% style, icon = if( params[facet.name] )
+				[" style='display:block;'", "ui-icon-triangle-1-s"]
+			else
+				[                      nil, "ui-icon-triangle-1-e"]
+			end %>
+	
+			<%= content_tag(:div, class: 'facet_toggle') do %>
+				<% non_blank_row_count = facet.rows.reject{|r|r.value.blank?}.length %>
+				<% facet_label = facet.name.to_s %>
+				<%= content_tag(:span,'&nbsp;'.html_safe, class: "ui-icon #{icon}") %>
+				<%= link_to("#{facet_label}&nbsp;(#{non_blank_row_count})".html_safe, 
+					'javascript:void()') %>
+			<% end %><%# content_tag(:div, class: 'toggle') do %>
 
-
-<div class='field_wrapper'>
-	<%= label_tag( :per_page, 'per page (html only) ' )%>
-	<%= select_tag( :per_page, options_for_select([25,50,100], params[:per_page]||50) )%>
-</div><!-- class='field_wrapper' -->
-
+			<%= content_tag(:div, id: facet.name, class: 'facet_field', style:style) do %>
+				<%= content_tag(:ul, class: 'facet_field_values') do %>
+					<% facet.rows.each do |row| %>
+						<% next if row.value.blank? %>
+						<% label = row.value %>
+						<%= content_tag(:li) do %>
+							<%# if options[:radio] %>
+								<%#= radio_button_tag( "#{facet.name}[]", row.value,
+										[params[facet.name]].flatten.include?(row.value.to_s),
+										{ :id => "#{facet.name}_#{row.value.html_friendly}" } ) %>
+							<%# else %>
+								<%= check_box_tag( "#{facet.name}[]", row.value, 
+										[params[facet.name]].flatten.include?(row.value.to_s),
+										{ :id => "#{facet.name}_#{row.value.html_friendly}" } ) %>
+							<%# end %>
+							<%= label_tag "#{facet.name}_#{row.value.html_friendly}",
+								"<span>#{label}</span>&nbsp;(&nbsp;#{row.count}&nbsp;)".html_safe  %>
+						<% end %><%# content_tag(:li, %>
+					<% end %><%# facet.rows.each %>
+				<% end %><%# content_tag(:ul, %>
+			<% end %><%# content_tag(:div, id: facet.name) do %>
+	
+		<% end -%><%# @search.facets.each do |facet| -%>
+		<% end %><%# content_tag(:div, class: 'facets') do %>
+	
+	
+		<%= content_tag(:div, class: 'field_wrapper') do %>
+			<%= label_tag( :per_page, 'per page (html only) ' )%>
+			<%= select_tag( :per_page, options_for_select([25,50,100], params[:per_page]||50) )%>
+		<% end %><%# content_tag(:div, class: 'field_wrapper') do %>
 
 	<% end %><%# form_tag -%>
-</div>
+<% end %><%# content_tag(:div, id: 'refine') do %>
 
-<div id='results'>
+<%= content_tag(:div, id: 'results') do %>
 	<% unless @search.results.empty? %>
 		<table><thead><tr>
 			<th>&nbsp;</th>
@@ -41,7 +70,7 @@
 		</tr></thead><tbody>
 			<% @search.results.each do |result| %>
 				<tr class='row'>
-					<td><%= result.id %></td>
+					<td><%= link_to result.id, result %></td>
 					<td><%= result.name %></td>
 					<td><%= result.description %></td>
 				</tr>
@@ -53,4 +82,6 @@
 	<% else %>
 		<p>No results</p>
 	<% end %>
-</div>
+<% end %><%# content_tag(:div, id: 'results') do %>
+<% end %><%# content_tag(:div, class: 'table_row') do %>
+<% end %><%# content_tag(:div, class: 'table') do %>

@@ -14,3 +14,24 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+
+
+
+jQuery(function(){
+
+//
+// perhaps make this 'div.facet_toggle *' so as to include the span triangle icon?
+//
+	jQuery('div.facet_toggle a').click(function(){
+//		jQuery(this).parent().next().toggle(500);
+//  added 'blind' so doesn't resize stuff and just slides in.
+//	be advised that this effect temporarily wraps the target in a div until done.
+		jQuery(this).parent().next().toggle('blind',500);
+		jQuery(this).prev().toggleClass('ui-icon-triangle-1-e');
+		jQuery(this).prev().toggleClass('ui-icon-triangle-1-s');
+//	jQuery(this).parent().toggleClass('open');
+		return false;
+	});
+
+});
