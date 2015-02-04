@@ -14,7 +14,7 @@
 			<% next if facet.rows.empty? -%><%# don't show empty facets -%>
 	
 			<% style, icon = if( params[facet.name] )
-				[" style='display:block;'", "ui-icon-triangle-1-s"]
+				["display:block;", "ui-icon-triangle-1-s"]
 			else
 				[                      nil, "ui-icon-triangle-1-e"]
 			end %>
@@ -27,7 +27,7 @@
 					'javascript:void()') %>
 			<% end %><%# content_tag(:div, class: 'toggle') do %>
 
-			<%= content_tag(:div, id: facet.name, class: 'facet_field', style:style) do %>
+			<%= content_tag(:div, id: facet.name, class: 'facet_field', style: style) do %>
 				<%= content_tag(:ul, class: 'facet_field_values') do %>
 					<% facet.rows.each do |row| %>
 						<% next if row.value.blank? %>

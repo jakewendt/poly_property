@@ -43,3 +43,7 @@ a sunspot index made almost entirely of dynamic fields.
 
  bundle exec rake sunspot:solr:start
 
+ bundle exec rake db:seed
+
+ bundle exec rake sunspot:reindex
+

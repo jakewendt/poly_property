@@ -10,12 +10,18 @@ class Widget < ActiveRecord::Base
 		#	:multiple => true works, so need to use arrays
 		dynamic_string :properties, :multiple => true do
 			#	loop over properties and build a hash.
-			properties.inject({}) do |hash, property|
-				if( hash.has_key?( property.key.to_sym ) )
-					hash[property.key.to_sym].push( property.value )
-				else
-					hash.merge!(property.key.to_sym => [property.value])
-				end
+			#	properties.inject({}) do |hash, property|
+			#		if( hash.has_key?( property.key.to_sym ) )
+			#			hash[property.key.to_sym].push( property.value )
+			#		else
+			#			hash.merge!(property.key.to_sym => [property.value])
+			#		end
+			#		hash
+			#	end
+
+			#	This is simpler.  Set default value to array.
+			properties.inject( Hash.new {|h,k| h[k] = [] } ) do |hash, property|
+				hash[property.key.to_sym].push( property.value )
 				hash
 			end
 		end
