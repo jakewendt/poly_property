@@ -1,5 +1,5 @@
 <%= content_tag(:div, class: 'table') do %>
-<%= content_tag(:div, class: 'table_row') do %>
+<%= content_tag(:div, class: 'row') do %>
 <%= content_tag(:div, id: 'refine') do %>
 	<%= form_tag( widgets_path, :method => :get ) do %>
 		<%= submit_tag "Search Widgets", :name => nil %><br/>

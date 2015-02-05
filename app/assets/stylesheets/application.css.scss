@@ -18,14 +18,22 @@
 div.table {
 	display: table;
 	width: 100%;
-	> div.table_row {
+	> .row {
 		display: table-row;
 		> div {
 			display: table-cell;
-			border: 10px solid red;
+			border: 1px solid silver;
+			vertical-align: top;
+			text-align: center;
 		}
 	}
 }
+
+tr:nth-child(2n)   { background-color: #FCF9EF; }
+tr:nth-child(2n+1) { background-color: #F5F1E8; }
+
+
+
 
 
 
@@ -73,4 +81,51 @@ div.table {
 		}
 	}
 }
+
+
+
+#refine {
+	min-width: 300px;
+	/* still don't understand why, but when min-width is used, the facet column flickers too wide for a second when toggling? */
+	/* interestingly, having both width and min-width seems to do exactly what I want without flicker.  Yay */
+	width: 400px;
+	border-right: 2px solid silver;
+	padding: 0 10px;
+	form input[type=submit] {
+		font-size:14pt;
+		font-weight:bold;
+		border: 1px solid black;
+		width: 100%;
+		margin: 10px 0;
+
+		/* http://css-radius.heroku.com */
+		-webkit-border-radius: 8px;
+		-moz-border-radius: 8px;
+		border-radius: 8px;
+
+		background-color: #DDDDDD;
+		/* for webkit browsers */
+		background-image: -webkit-gradient(linear, left top, left bottom, from(#FFFFFF), to(#BBBBBB)); 
+		/* for firefox 3.6+  */
+		background-image: -moz-linear-gradient(top,  #FFFFFF,  #BBBBBB); 
+		/* for ie , but doesn't seem to work as expected despite other examples working */
+		filter: progid:DXImageTransform.Microsoft.gradient(StartColorStr='#FFFFFF', EndColorStr='#BBBBBB');
+	}
+}
+
+
+#results {
+	padding: 0 10px;
+	background-color: #FFF;
+}
+
+#filters {
+	padding: 0 10px;
+	border: 1px solid gray;
+	h3 {
+		margin-top:0;
+		padding-top:10px;
+	}
+}
+
 
